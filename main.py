@@ -64,4 +64,5 @@ if __name__ == '__main__':
     df = pd.DataFrame(data={'Name': testset['player_name'].values,
                         'Rank': np.array([item + 1 for item in rank_pred])})
     df.to_csv('Rank.csv') 
-    print('Predictions saved to Rank.csv.')
+    print('Best NDCG predictions saved to Rank.csv.')
+

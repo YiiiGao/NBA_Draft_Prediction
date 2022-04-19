@@ -132,12 +132,12 @@ def use_neural_network(X_train, y_train, X_test, y_test):
             train_accuracy_list.append(epoch_acc/len(train_loader))
             if val_accuracy > best_accuracy:
                 best_accuracy = val_accuracy
-                torch.save(model.state_dict(), 'rank.pt') # save best model
+                torch.save(model.state_dict(), 'rank_nn.pt') # save best model
             print(f"Epoch {e+0:03}: | Loss: {epoch_loss/len(train_loader):.5f} | train acc: {epoch_acc/len(train_loader):.3f} | val acc: {val_accuracy:.3f}")
     
     #Prediction
     print('Finished training. Start prediction ...')
-    best_state_dict = torch.load('rank.pt') #load best model
+    best_state_dict = torch.load('rank_nn.pt') #load best model
     model.load_state_dict(best_state_dict) 
     y_pred = []
     model.eval()
