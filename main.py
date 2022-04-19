@@ -1,18 +1,12 @@
 # -*- coding: utf-8 -*-
-from ast import arg
 import pandas as pd
 import numpy as np
-from sklearn.model_selection import train_test_split
-from sklearn.tree import DecisionTreeRegressor
-from sklearn.linear_model import LogisticRegression, Ridge, Lasso
+
 from sklearn.ensemble import RandomForestRegressor, RandomForestClassifier
 from sklearn.metrics import mean_absolute_error, accuracy_score, ndcg_score
-from sklearn.svm import LinearSVC, SVC
-from sklearn.preprocessing import StandardScaler
-import itertools
-from xgboost import XGBClassifier
-import warnings
+
 import argparse
+import warnings
 warnings.filterwarnings("ignore")
 
 import utils
@@ -61,7 +55,6 @@ if __name__ == '__main__':
     parser.add_argument('--use_nn', type=bool, help='Choose whether to use the neural network',
                                     default=False)
     args = parser.parse_args()
-    #TODO
     
     if args.year < 2009 or args.year > 2021:
         raise ValueError('Unsupported year number!')
