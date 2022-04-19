@@ -22,3 +22,5 @@ def calc_ndcg(y_pred, y_test):
         scores[i] = np.sum(y_pred[i * y_test.shape[0]: (i + 1) * y_test.shape[0]])
     rank_pred = scores.argsort().argsort()
     return rank_pred, ndcg_score([y_test.argsort().argsort()], [rank_pred])
+
+    

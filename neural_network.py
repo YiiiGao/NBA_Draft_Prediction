@@ -92,12 +92,13 @@ def use_neural_network(X_train, y_train, X_test, y_test):
     optimizer = optim.Adam(model.parameters(), lr=0.01)
 
     #Train
-    print('Start training ... It may takes around 5 minutes ...')
+    print('Using Neural Network...')
+    print('Start training ... It may takes a few minutes ...')
     model.train()
     best_accuracy = 0
     train_accuracy_list = []
     val_accuracy_list = []
-    epochs = 10
+    epochs = 100
     for e in range(epochs):
         epoch_loss = 0
         epoch_acc = 0
@@ -150,7 +151,7 @@ def use_neural_network(X_train, y_train, X_test, y_test):
             y_pred.append(y_pred_tag.cpu().numpy())
 
     y_pred = np.array([int(i.squeeze().tolist()) for i in y_pred])
-    print('Pairwise accuracy: ', accuracy_score(y_test_new, np.where(y_pred == 0, -1, y_pred)))
+    print('Pairwise accuracy of Neural Network: ', accuracy_score(y_test_new, np.where(y_pred == 0, -1, y_pred)))
     rank, score = utils.calc_ndcg(np.where(y_pred == 0, -1, y_pred), y_test)
-    print("NDCG score: ", score)
+    print("NDCG score of Neural Network: ", score)
     return rank
