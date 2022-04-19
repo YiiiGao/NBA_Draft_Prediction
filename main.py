@@ -2,16 +2,16 @@
 import pandas as pd
 import numpy as np
 
-from sklearn.ensemble import RandomForestRegressor, RandomForestClassifier
-from sklearn.metrics import mean_absolute_error, accuracy_score, ndcg_score
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import mean_absolute_error
 
 import argparse
 import warnings
 warnings.filterwarnings("ignore")
 
-import utils
 import neural_network
 import rank
+import regression
 
 def load_dataset(year):
     raw_dataset = pd.read_csv('CollegeBasketballPlayers2009-2021.csv', low_memory=False)
@@ -36,15 +36,6 @@ def preprocess(trainset, testset):
     y_test = np.asarray(testset.pick)
     return X_train, y_train_pick, y_train_year, X_test, y_test
 
-def use_regression_model(X_train, y_train, X_test, y_test):
-    ball_model = RandomForestRegressor()
-    ball_model.fit(X_train, y_train)
-    y_pred = ball_model.predict(X_test)
-    y_pred = y_pred.argsort().argsort()
-    y_test = y_test.argsort().argsort()
-    mae = mean_absolute_error(y_pred, y_test)
-    print("Mean Absolute Error: {:,.5f}".format(mae))
-    return y_pred
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='NBA Draft Prediction Program')
@@ -65,6 +56,7 @@ if __name__ == '__main__':
     X_train, y_train_pick, y_train_year, X_test, y_test = preprocess(trainset, testset)
     y_train = np.c_[y_train_pick, y_train_year]
     if args.method == 'ranking':
+        print('Using ranking models...')
         rank_pred = rank.use_rank_model(X_train, y_train, X_test, y_test)
         if args.use_nn:
             rank_nn = neural_network.use_neural_network(X_train, y_train, X_test, y_test)
@@ -74,7 +66,8 @@ if __name__ == '__main__':
             print(f'Neural Network Predictions saved to Rank_{args.year}_nn.csv.') 
 
     elif args.method == 'regression':
-        rank_pred = use_regression_model(X_train, y_train_pick, X_test, y_test)
+        print('Using regression models...')
+        rank_pred = regression.use_regression_model(X_train, y_train_pick, X_test, y_test)
     else:
         raise ValueError('Unsupported method type!')
 
