@@ -40,7 +40,7 @@ def preprocess(trainset, testset):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='NBA Draft Prediction Program')
     parser.add_argument('--method', type=str, help='Chooose the learning method you like between regression and ranking', 
-                                    default='ranking', choices=['regression', 'ranking'])
+                                    default='regression', choices=['regression', 'ranking'])
     parser.add_argument('--year', type=int, help='Choose a year from 2009 to 2021 as the testset',
                                     default=2021)
     parser.add_argument('--use_nn', type=bool, help='Choose whether to use the neural network',
